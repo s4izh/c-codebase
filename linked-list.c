@@ -4,13 +4,12 @@
 typedef struct {
   int value;
   void *next;
-  /* struct Node *prev; */
 } Node;
 
 Node *head = NULL;
 
-// add a node to the list
 
+/* add as the head of the list */
 Node* add_node(int value)
 {
   Node *new = malloc(sizeof(Node));
@@ -26,6 +25,7 @@ Node* add_node(int value)
   return new;
 }
 
+/* add a node with a given value in a given position */
 Node *add_node_position(int value, int position)
 {
   Node *new = malloc(sizeof(Node));
@@ -57,8 +57,7 @@ Node *add_node_position(int value, int position)
   return new;
 }
 
-// remove a node from the list
-
+/* remove a node from the head */
 void remove_head()
 {
   Node *removed = head;
@@ -66,12 +65,57 @@ void remove_head()
   free(removed);
 }
 
+/* remove a node in a given position */
+void remove_node_position(int position)
+{
+  Node* current = head;
+  Node* prev = head;
 
-// options
+  while(position > 0 && current != NULL) {
+    prev = current;
+    current = current->next;
+    --position;
+  }
 
+  if (current == NULL) return;
+
+  if (current == head) {
+    head = current->next;
+  }
+  else {
+    prev->next = current->next;
+  }
+  free(current);
+  return;
+}
+
+/* remove a node with a given value */
+void remove_node_value(int value)
+{
+  Node* current = head;
+  Node* prev = head;
+
+  while(current != NULL) {
+    if (current->value == value) {
+      if (current == head) {
+        head = current->next;
+      }
+      else {
+        prev->next = current->next;
+      }
+      free(current);
+      return;
+    }
+    prev = current;
+    current = current->next;
+  }
+}
+
+/* print the list */
 void print_list()
 {
   Node* current = head;
+  Node *prev = head;
 
   while(current != NULL) {
     printf("%d->", current->value);
@@ -88,8 +132,9 @@ void print_options()
   printf("\t2) add an element in a given position\n");
   printf("\t3) remove an element from the list head\n");
   printf("\t4) remove an element from a given position\n");
-  printf("\t5) print the list\n");
-  printf("\t6) exit\n");
+  printf("\t5) remove an element with a given value\n");
+  printf("\t6) print the list\n");
+  printf("\t7) exit\n");
 }
 
 int main (int argc, char *argv[])
@@ -98,7 +143,7 @@ int main (int argc, char *argv[])
 
   int option = 0;
 
-  while (option != 6)
+  while (option != 7)
   {
     scanf("%d", &option);
     int value, position;
@@ -121,13 +166,20 @@ int main (int argc, char *argv[])
         print_list();
         break;
       case 4:
-        printf("remove an element from a given position\n");
+        scanf("%d", &position);
+        remove_node_position(position);
+        print_list();
         break;
       case 5:
-        printf("printing the list\n");
+        scanf("%d", &value);
+        remove_node_value(value);
         print_list();
         break;
       case 6:
+        printf("printing the list\n");
+        print_list();
+        break;
+      case 7:
         printf("exit\n");
         break;
       default:
