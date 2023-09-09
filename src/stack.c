@@ -1,4 +1,4 @@
-#include <stack.h>
+#include "stack.h"
 
 stack *stack_init(int size) {
     stack *s = (stack *) malloc(sizeof(stack));
@@ -9,7 +9,7 @@ stack *stack_init(int size) {
 }
 
 int stack_push(stack *s, int data) {
-    if (stack_is_full(s)) {
+    if (stack_full(s)) {
         return -1;
     }
     s->data[++s->top] = data;

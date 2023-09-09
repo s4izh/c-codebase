@@ -11,7 +11,7 @@ typedef struct stack {
 
 stack *stack_init(int size);
 
-void stack_push(stack *s, int data);
+int stack_push(stack *s, int data);
 
 int stack_pop(stack *s);
 
