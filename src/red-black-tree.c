@@ -3,13 +3,13 @@
 Tree* initTree(int key, void* value, size_t valueSize)
 {
     Tree* tree = malloc(sizeof(Tree));
-    if (root == NULL) {
-        return -1;
+    if (tree == NULL) {
+        return NULL;
     }
 
     Node *root = malloc(sizeof(Node));
     if (root == NULL) {
-        return -1;
+        return NULL;
     }
 
     tree->root = root;
@@ -40,7 +40,7 @@ int insert(Tree* tree, int key, void* value)
     return insert_rec(tree->root, key, value);
 }
 
-int insertRec(Node* node, int key, void* value)
+int insert_rec(Node* node, int key, void* value)
 {
     if (key <= node->key) {
         if (node->leftLeaf == NULL) {

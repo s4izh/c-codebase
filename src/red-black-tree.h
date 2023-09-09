@@ -16,5 +16,7 @@ typedef struct {
 } Tree;
 
 void* createTreeMap();
+int insert(Tree* tree, int key, void* value);
+int insert_rec(Node* node, int key, void* value);
 
 #endif /* __tree_map_h__ */
