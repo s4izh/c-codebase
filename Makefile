@@ -2,18 +2,18 @@
 
 CC = gcc
 
-linked-list:
-	$(CC) -c src/$@.c -o build/$@.o
+linked-list.o:
+	$(CC) -c src/linked-list.c -o build/$@
 
-red-black-tree:
-	$(CC) -c src/$@.c -o build/$@.o
+red-black-tree.o:
+	$(CC) -c src/red-black-tree.c -o build/$@
 
-stack:
-	$(CC) -c src/$@.c -o build/$@.o
+stack.o:
+	$(CC) -c src/stack.c -o build/$@
 
 OBJ = build/stack.o
 
-main: linked-list red-black-tree stack
+main: linked-list.o red-black-tree.o stack.o
 	$(CC) -o build/$@ src/$@.c $(OBJ)
 
-all: linked-list red-black-tree stack
+all: main

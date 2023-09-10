@@ -1,6 +1,6 @@
 #include "red-black-tree.h"
 
-Tree* initTree(int key, void* value, size_t valueSize)
+Tree* init_tree(int key, void* value, size_t value_size, void* cmp)
 {
     Tree* tree = malloc(sizeof(Tree));
     if (tree == NULL) {
@@ -13,24 +13,24 @@ Tree* initTree(int key, void* value, size_t valueSize)
     }
 
     tree->root = root;
-    tree->valueSize = valueSize;
+    tree->value_size = value_size;
 
     root->value = value;
-    root->leftLeaf = NULL;
-    root->rightLeaf = NULL;
+    root->left_leaf = NULL;
+    root->right_leaf = NULL;
 
     return tree;
 }
 
-Node* initNode(int key, void* value) {
+Node* init_node(int key, void* value) {
     Node* node = malloc(sizeof(Node));
     if (node == NULL)
         return NULL;
 
     node->key = key;
     node->value = value;
-    node->leftLeaf = NULL;
-    node->rightLeaf = NULL;
+    node->left_leaf = NULL;
+    node->right_leaf = NULL;
 
     return node;
 }
@@ -43,25 +43,26 @@ int insert(Tree* tree, int key, void* value)
 int insert_rec(Node* node, int key, void* value)
 {
     if (key <= node->key) {
-        if (node->leftLeaf == NULL) {
-            Node* newNode = initNode(key, value);
-            if (newNode == NULL)
+        if (node->left_leaf == NULL) {
+            Node* new_node = init_node(key, value);
+            if (new_node == NULL)
                 return -1;
-            node->leftLeaf = newNode;
+            node->left_leaf = new_node;
             return 0;
         }
         else
-            insert_rec(node->leftLeaf, key, value);
+            insert_rec(node->left_leaf, key, value);
     }
-    if (key <= node->key) {
-        if (node->rightLeaf == NULL) {
-            Node* newNode = initNode(key, value);
-            if (newNode == NULL)
+    if (key >= node->key) {
+        if (node->right_leaf == NULL) {
+            Node* new_node = init_node(key, value);
+            if (new_node == NULL)
                 return -1;
-            node->rightLeaf = newNode;
+            node->right_leaf = new_node;
             return 0;
         }
         else
-            insert_rec(node->rightLeaf, key, value);
+            insert_rec(node->right_leaf, key, value);
     }
+    return -1;
 }

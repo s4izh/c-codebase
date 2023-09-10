@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "stack.h"
 
-int stack_test()
+static int stack_test()
 {
     int ret;
     stack* st = stack_init(5);
@@ -26,6 +26,12 @@ int stack_test()
     } else {
         printf("Stack push overflow FAILED\n");
     }
+    ret = stack_full(st);
+    if (ret) {
+        printf("Stack full passed\n");
+    } else {
+        printf("Stack full FAILED\n");
+    }
 
     stack* st2 = stack_init(1);
     stack_push(st2, 2);
@@ -36,6 +42,15 @@ int stack_test()
     } else {
         printf("Stack empty FAILED\n");
     }
+
+    stack_free(st);
+    stack_free(st2);
+    return 0;
+}
+
+static int red_black_tree_test()
+{
+    return 0;
 }
 
 int main ()
