@@ -4,6 +4,6 @@
 /** Quicksort
     @brief Sort an array using inplace quicksort algorithm
   */
-void quicksort(int array[], int low, int high);
+void quicksort(int array[], int size);
 
 #endif  // __QUICKSORT_H__

@@ -11,9 +11,12 @@ red-black-tree.o:
 stack.o:
 	$(CC) -c src/stack.c -o build/$@
 
-OBJ = build/stack.o
+quicksort.o:
+	$(CC) -c src/quicksort.c -o build/$@
 
-main: linked-list.o red-black-tree.o stack.o
+OBJ = build/stack.o build/quicksort.o
+
+main: linked-list.o red-black-tree.o stack.o quicksort.o
 	$(CC) -o build/$@ src/$@.c $(OBJ)
 
 all: main

@@ -1,5 +1,7 @@
 #include <stdio.h>
+
 #include "stack.h"
+#include "quicksort.h"
 
 static int stack_test()
 {
@@ -53,7 +55,21 @@ static int red_black_tree_test()
     return 0;
 }
 
+static int quicksort_test()
+{
+    int a[10] = {0, 2, 3, 7, 8, 4, 0, 7, 11, 9};
+    quicksort(a, 10);
+
+    for (int i = 0; i < 10; ++i)
+        printf("%d ", a[i]);
+
+    printf("\n");
+
+    return 0;
+}
+
 int main ()
 {
     stack_test();
+    quicksort_test();
 }

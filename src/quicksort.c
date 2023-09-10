@@ -1,4 +1,5 @@
 #include "quicksort.h"
+#include <stdio.h>
 
 static void swap(int* a, int* b)
 {
@@ -7,7 +8,7 @@ static void swap(int* a, int* b)
     b = t;
 }
 
-void quicksort(int arr[], int low, int high)
+static void quicksort_rec(int arr[], int low, int high)
 {
     if (low < high) {
         int pivot = arr[high];
@@ -19,11 +20,14 @@ void quicksort(int arr[], int low, int high)
                 swap(&arr[i], &arr[j]);
             }
         }
-        swap(&arr[i + 1], &arr[high]);
+        swap(&arr[i], &arr[high]);
 
-        int pi = i + 1;
-
-        quicksort(arr, low, pi - 1);
-        quicksort(arr, pi + 1, high);
+        quicksort_rec(arr, low, i - 1);
+        quicksort_rec(arr, i + 1, high);
     }
+}
+
+void quicksort(int arr[], int size)
+{
+    quicksort_rec(arr, 0, size - 1);
 }
