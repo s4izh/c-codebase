@@ -3,9 +3,9 @@
 
 static void swap(int* a, int* b)
 {
-    int* t = a;
-    a = b;
-    b = t;
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
 static void quicksort_rec(int arr[], int low, int high)
@@ -14,10 +14,12 @@ static void quicksort_rec(int arr[], int low, int high)
         int pivot = arr[high];
         int i = low;
 
+
         for (int j = low; j < high; ++j) {
             if (arr[j] < pivot) {
+                if (i != j)
+                    swap(&arr[i], &arr[j]);
                 ++i;
-                swap(&arr[i], &arr[j]);
             }
         }
         swap(&arr[i], &arr[high]);
