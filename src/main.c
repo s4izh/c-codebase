@@ -109,28 +109,73 @@ static void vector_debug(vector* v)
     fprintf(stderr, "]\n");
 }
 
+static void print_int(int* i) {
+    printf("%d", *i);
+}
+
 static void vector_test()
 {
     vector v;
-    vector_init(&v, sizeof(int));
-    vector_push_back(&v, (void *)&(int){1});
+    vector_alloc(&v, sizeof(int));
+    vector_push_back(&v, (void *)&(int){0});
 
-    if (v.length == 1 && v.capacity == 2 && ((int*)v.data)[0] == 1) {
+    if (v.length == 1 && v.capacity == 2 && ((int*)v.data)[0] == 0) {
         printf("Vector push_back test 1 passed\n");
     } else {
         printf("Vector push_back test 1 FAILED\n");
         vector_debug(&v);
     }
 
+    vector_push_back(&v, (void *)&(int){1});
     vector_push_back(&v, (void *)&(int){2});
-    vector_push_back(&v, (void *)&(int){3});
 
-    if (v.length == 3 && v.capacity == 4 && ((int*)v.data)[2] == 3) {
+    if (v.length == 3 && v.capacity == 4 && ((int*)v.data)[2] == 2) {
         printf("Vector push_back test 2 passed\n");
     } else {
         printf("Vector push_back test 2 FAILED\n");
         vector_debug(&v);
     }
+    vector_push_back(&v, (void *)&(int){3});
+    vector_push_back(&v, (void *)&(int){4});
+    vector_push_back(&v, (void *)&(int){5});
+    vector_push_back(&v, (void *)&(int){6});
+    vector_push_back(&v, (void *)&(int){7});
+    vector_push_back(&v, (void *)&(int){8});
+    vector_push_back(&v, (void *)&(int){9});
+
+    if (v.length == 10 && v.capacity == 16 && ((int*)v.data)[9] == 9) {
+        printf("Vector push_back test 3 passed\n");
+    } else {
+        printf("Vector push_back test 3 FAILED\n");
+        vector_debug(&v);
+    }
+
+    int *value = vector_get_value(&v, 9);
+    int *value_err = vector_get_value(&v, 10);
+    if (*value == 9 && value_err == NULL) {
+        printf("Vector get_value test passed\n");
+    } else {
+        printf("Vector get_value test FAILED\n");
+    }
+    vector_pop_back(&v);
+    value_err = vector_get_value(&v, 9);
+    if (value_err == NULL) {
+        printf("Vector pop_back test 1 passed\n");
+    } else {
+        printf("Vector pop_back test 1 FAILED\n");
+    }
+    vector_pop_back(&v);
+    vector_pop_back(&v);
+    if (v.capacity == 8 && v.length == 7) {
+        printf("Vector pop_back test 2 passed\n");
+    } else {
+        printf("Vector pop_back test 2 FAILED\n");
+    }
+
+    vector_for_each(&v, (void*) print_int);
+    printf("\n");
+
+    vector_free(&v);
 }
 
 int main ()

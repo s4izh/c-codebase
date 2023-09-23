@@ -10,10 +10,16 @@ typedef struct vector {
     size_t data_size;
 } vector;
 
-void vector_init(vector* v, size_t data_size);
+int vector_alloc(vector* v, size_t data_size);
 
-void vector_push_back(vector* v, void* data);
+void vector_free(vector* v);
 
-void vector_pop_back(vector* v);
+int vector_push_back(vector* v, void* data);
+
+int vector_pop_back(vector* v);
+
+void* vector_get_value(vector* v, int index);
+
+void vector_for_each(vector* v, void(*f)(void*));
 
 #endif /* __VECTOR_H__ */
