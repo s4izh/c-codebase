@@ -109,8 +109,8 @@ static void vector_debug(vector* v)
     fprintf(stderr, "]\n");
 }
 
-static void print_int(int* i) {
-    printf("%d", *i);
+static void multiply_by_2(int* i) {
+    *i *= 2;
 }
 
 static void vector_test()
@@ -172,8 +172,17 @@ static void vector_test()
         printf("Vector pop_back test 2 FAILED\n");
     }
 
-    vector_for_each(&v, (void*) print_int);
-    printf("\n");
+    vector_for_each(&v, (void*) multiply_by_2);
+    int for_each_failed = 0;
+    for (int i = 0; i < v.length; ++i) {
+        if (*(int *)vector_get_value(&v, i) != i*2)
+            for_each_failed = 1;
+    }
+    if (!for_each_failed) {
+        printf("Vector for_each passed\n");
+    } else {
+        printf("Vector for_each FAILED\n");
+    }
 
     vector_free(&v);
 }
