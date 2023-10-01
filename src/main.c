@@ -22,23 +22,28 @@ typedef enum {
 
 CHECK_PRINT_FMT(2, 3) void my_log(LogLevel log, const char* fmt, ...)
 {
+    FILE* fd = stdout;
     switch (log) {
-    case DEBUG:
-        printf("DEBUG: ");
-        break;
-    case INFO:
-        printf("INFO: ");
-        break;
-    case WARNING:
-        printf("WARNING: ");
-        break;
-    case ERROR:
-        printf("ERROR: ");
-        break;
+        case DEBUG:
+            fprintf(fd, "DEBUG: ");
+            break;
+        case INFO:
+            fprintf(fd, "INFO: ");
+            break;
+        case WARNING:
+            fprintf(fd, "WARNING: ");
+            break;
+        case ERROR:
+            fd = stderr;
+            fprintf(fd, "ERROR: ");
+            break;
+        default:
+            fprintf(fd, "UNKNOWN: ");
+            break;
     }
     va_list args;
     va_start(args, fmt);
-    vprintf(fmt, args);
+    vfprintf(fd, fmt, args);
     va_end(args);
 }
 
