@@ -1,8 +1,46 @@
+#include <math.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "stack.h"
 #include "quicksort.h"
 #include "vector.h"
+
+typedef enum {
+    DEBUG,
+    INFO,
+    WARNING,
+    ERROR,
+} LogLevel;
+
+
+#if defined(__GNUC__) || defined(__clang__)
+#define CHECK_PRINT_FMT(a, b) __attribute__((format(printf, a, b)))
+#else
+#define CHECK_PRINT_FMT(...)
+#endif
+
+CHECK_PRINT_FMT(2, 3) void my_log(LogLevel log, const char* fmt, ...)
+{
+    switch (log) {
+    case DEBUG:
+        printf("DEBUG: ");
+        break;
+    case INFO:
+        printf("INFO: ");
+        break;
+    case WARNING:
+        printf("WARNING: ");
+        break;
+    case ERROR:
+        printf("ERROR: ");
+        break;
+    }
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+}
 
 static int stack_test()
 {
@@ -172,7 +210,7 @@ static void vector_test()
         printf("Vector pop_back test 2 FAILED\n");
     }
 
-    vector_for_each(&v, (void*) multiply_by_2);
+    vector_for_each(&v, (void(*)(void*)) multiply_by_2);
     int for_each_failed = 0;
     for (int i = 0; i < v.length; ++i) {
         if (*(int *)vector_get_value(&v, i) != i*2)
@@ -189,6 +227,8 @@ static void vector_test()
 
 int main ()
 {
+    int a = 10;
+    my_log(INFO, "Hello world %d\n", a);
     stack_test();
     quicksort_test();
     vector_test();
