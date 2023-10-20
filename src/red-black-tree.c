@@ -1,27 +1,5 @@
 #include "red-black-tree.h"
 
-Tree* init_tree(int key, void* value, size_t value_size, void* cmp)
-{
-    Tree* tree = malloc(sizeof(Tree));
-    if (tree == NULL) {
-        return NULL;
-    }
-
-    Node *root = malloc(sizeof(Node));
-    if (root == NULL) {
-        return NULL;
-    }
-
-    tree->root = root;
-    tree->value_size = value_size;
-
-    root->value = value;
-    root->left_leaf = NULL;
-    root->right_leaf = NULL;
-
-    return tree;
-}
-
 Node* init_node(int key, void* value) {
     Node* node = malloc(sizeof(Node));
     if (node == NULL)
@@ -33,6 +11,16 @@ Node* init_node(int key, void* value) {
     node->right_leaf = NULL;
 
     return node;
+}
+
+Tree* init_tree(int key, void* value, size_t value_size)
+{
+    Tree* tree = malloc(sizeof(Tree));
+    if (tree == NULL) {
+        return NULL;
+    }
+    tree->root = init_node(key, value);
+    return tree;
 }
 
 int insert(Tree* tree, int key, void* value)
