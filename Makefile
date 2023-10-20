@@ -21,8 +21,29 @@ vector.o:
 
 OBJ = build/stack.o build/quicksort.o build/vector.o
 
-main: linked-list.o red-black-tree.o stack.o quicksort.o vector.o
+main: red-black-tree.o stack.o quicksort.o vector.o
 	$(CC) $(CFLAGS) -o build/$@ src/$@.c $(OBJ)
+
+macros:
+	$(CC) $(CFLAGS) -o build/$@ src/$@.c
+
+macros-expand:
+	$(CC) $(CFLAGS) -E src/macros.c
+
+## network programming based in
+## https://beej.us/guide/bgnet/html/split/client-server-background.html#client-server-background
+
+server:
+	$(CC) $(CFLAGS) -o build/$@ src/network/$@.c
+
+client:
+	$(CC) $(CFLAGS) -o build/$@ src/network/$@.c
+
+listener:
+	$(CC) $(CFLAGS) -o build/$@ src/network/$@.c
+
+talker:
+	$(CC) $(CFLAGS) -o build/$@ src/network/$@.c
 
 all: main
 
