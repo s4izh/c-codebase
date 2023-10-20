@@ -1,0 +1,38 @@
+BINARY=bin
+CODEDIRS=./src
+INCLUDEDIRS=. ./src/include/
+
+CC=gcc
+OPT=-O0
+
+# generate files that encode make rules for the .h dependencies
+DEPFLAGS=-MP -MD
+
+# automatically add the -I onto each include directory
+CFLAGS=-Wall -Wextra -g $(foreach D,$(INCLUDEDIRS),-I$D) $(OPT) $(DEPFLAGS)
+
+CFILES=$(foreach D,$(CODEDIRS),$(wildcard $D/*.c))
+
+OBJS=$(CFILES:.c=.o)
+DEPS=$(CFILES:.c=.d)
+
+all: $(BINARY)
+
+$(BINARY): $(OBJS)
+	$(CC) $(CFLAGS) -o build/$@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f $(BINARY) $(OBJS) $(DEPS)
+
+distribute: clean
+	tar -czvf $(BINARY).tar.gz *
+
+diff:
+	$(info The status of the git repository is:)
+	@git status
+	@git diff --stat
+
+
