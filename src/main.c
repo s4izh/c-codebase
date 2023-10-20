@@ -13,7 +13,6 @@ typedef enum {
     ERROR,
 } LogLevel;
 
-
 #if defined(__GNUC__) || defined(__clang__)
 #define CHECK_PRINT_FMT(a, b) __attribute__((format(printf, a, b)))
 #else
@@ -127,6 +126,13 @@ static int quicksort_test()
     quicksort(b, 10);
 
     int b_expected[10] = {0, 2, 4, 7, 7, 8, 9, 11, 17, 42};
+    failed = 0;
+
+    for (int i = 0; i < 10 && !failed; ++i) {
+        if (b[i] != b_expected[i]) {
+            failed = 1;
+        }
+    }
 
     if (failed) {
         printf("Quicksort test 2 FAILED, result = \n");

@@ -1,5 +1,4 @@
 #include "quicksort.h"
-#include <stdio.h>
 
 static void swap(int* a, int* b)
 {
