@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 
 #include "stack.h"

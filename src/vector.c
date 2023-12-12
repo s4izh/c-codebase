@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "sergio/vector.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -62,3 +62,7 @@ void vector_for_each(vector* v, void(*f)(void*))
         curr_data += v->data_size;
     }
 }
+
+#define for_each(element, v) \
+    element = *(v->data); \
+    for (size_t i = 0; i < v->length; element = *((v->data)+(v->data_size * i++)))
