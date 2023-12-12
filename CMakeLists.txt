@@ -6,6 +6,8 @@ set(SOURCES
     ./src/vector.c
 )
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_library(${PROJECT_NAME} ${SOURCES})
 
 # set C standard
