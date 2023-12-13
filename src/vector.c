@@ -64,5 +64,6 @@ void vector_for_each(vector* v, void(*f)(void*))
 }
 
 #define for_each(element, v) \
-    element = *(v->data); \
-    for (size_t i = 0; i < v->length; element = *((v->data)+(v->data_size * i++)))
+    for (size_t i = 0, element = *(v->data); i < v->length; element = *((v->data)+(v->data_size * i++)))
+
+
