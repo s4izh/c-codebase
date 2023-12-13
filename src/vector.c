@@ -16,6 +16,10 @@ int vector_alloc(vector* v, size_t data_size)
 void vector_free(vector* v)
 {
     free(v->data);
+    v->data = NULL;
+    v->length = 0;
+    v->capacity = 0;
+    v->data_size = 0;
 }
 
 int vector_push_back(vector* v, void* data)
