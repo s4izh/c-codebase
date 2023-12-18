@@ -3,56 +3,61 @@
 
 typedef struct {
     int value;
-    void *next;
+    void* next;
 } Node;
 
-Node *head = NULL;
-
+Node* head = NULL;
 
 /* add as the head of the list */
 Node* add_node(int value)
 {
-    Node *new = malloc(sizeof(Node));
+    Node* new = malloc(sizeof(Node));
 
-    if (new == NULL) return NULL;
+    if (new == NULL)
+        return NULL;
 
     new->value = value;
 
-    if (head == NULL) new->next = NULL;
-    else new->next = head;
+    if (head == NULL)
+        new->next = NULL;
+    else
+        new->next = head;
 
     head = new;
     return new;
 }
 
 /* add a node with a given value in a given position */
-Node *add_node_position(int value, int position)
+Node* add_node_position(int value, int position)
 {
-    Node *new = malloc(sizeof(Node));
+    Node* new = malloc(sizeof(Node));
 
-    if (new == NULL) return NULL;
+    if (new == NULL)
+        return NULL;
 
     new->value = value;
 
-    Node *current = head;
-    Node *prev = head;
+    Node* current = head;
+    Node* prev = head;
 
-    while (position > 0 && current != NULL)
-    {
+    while (position > 0 && current != NULL) {
         prev = current;
         current = prev->next;
         --position;
     }
 
-    if (position != 0) return NULL;
+    if (position != 0)
+        return NULL;
 
     if (current == NULL)
         new->next = NULL;
-    else new->next = current;
+    else
+        new->next = current;
 
     if (current == head)
         head = new;
-    else prev->next = new;
+    else
+        prev->next = new;
 
     return new;
 }
@@ -60,7 +65,7 @@ Node *add_node_position(int value, int position)
 /* remove a node from the head */
 void remove_head()
 {
-    Node *removed = head;
+    Node* removed = head;
     head = removed->next;
     free(removed);
 }
@@ -71,18 +76,18 @@ void remove_node_position(int position)
     Node* current = head;
     Node* prev = head;
 
-    while(position > 0 && current != NULL) {
+    while (position > 0 && current != NULL) {
         prev = current;
         current = current->next;
         --position;
     }
 
-    if (current == NULL) return;
+    if (current == NULL)
+        return;
 
     if (current == head) {
         head = current->next;
-    }
-    else {
+    } else {
         prev->next = current->next;
     }
     free(current);
@@ -95,12 +100,11 @@ void remove_node_value(int value)
     Node* current = head;
     Node* prev = head;
 
-    while(current != NULL) {
+    while (current != NULL) {
         if (current->value == value) {
             if (current == head) {
                 head = current->next;
-            }
-            else {
+            } else {
                 prev->next = current->next;
             }
             free(current);
@@ -115,9 +119,9 @@ void remove_node_value(int value)
 void print_list()
 {
     Node* current = head;
-    Node *prev = head;
+    Node* prev = head;
 
-    while(current != NULL) {
+    while (current != NULL) {
         printf("%d->", current->value);
         current = current->next;
     }
@@ -137,54 +141,55 @@ void print_options()
     printf("\t7) exit\n");
 }
 
-int main (int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     print_options();
 
     int option = 0;
 
-    while (option != 7)
-    {
+    while (option != 7) {
         scanf("%d", &option);
         int value, position;
-        Node *new;
+        Node* new;
 
         switch (option) {
-            case 1:
-                scanf("%d", &value);
-                new = add_node(value);
-                print_list();
-                break;
-            case 2:
-                scanf("%d", &value);
-                scanf("%d", &position);
-                new = add_node_position(value, position);
-                print_list();
-                break;
-            case 3:
-                remove_head();
-                print_list();
-                break;
-            case 4:
-                scanf("%d", &position);
-                remove_node_position(position);
-                print_list();
-                break;
-            case 5:
-                scanf("%d", &value);
-                remove_node_value(value);
-                print_list();
-                break;
-            case 6:
-                printf("printing the list\n");
-                print_list();
-                break;
-            case 7:
-                printf("exit\n");
-                break;
-            default:
-                printf("invalid option\n");
-                break;
+        case 1:
+            scanf("%d", &value);
+            new = add_node(value);
+            print_list();
+            break;
+        case 2:
+            scanf("%d", &value);
+            scanf("%d", &position);
+            new = add_node_position(value, position);
+            print_list();
+            break;
+        case 3: {
+            remove_head();
+            print_list();
+            break;
+        }
+        case 4: {
+            scanf("%d", &position);
+            remove_node_position(position);
+            print_list();
+            break;
+        }
+        case 5:
+            scanf("%d", &value);
+            remove_node_value(value);
+            print_list();
+            break;
+        case 6:
+            printf("printing the list\n");
+            print_list();
+            break;
+        case 7:
+            printf("exit\n");
+            break;
+        default:
+            printf("invalid option\n");
+            break;
         }
     }
 
