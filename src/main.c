@@ -3,9 +3,9 @@
 #include <stddef.h>
 #include <stdio.h>
 
+#include "sergio/vector.h"
 #include "stack.h"
 #include "quicksort.h"
-#include "vector.h"
 
 typedef enum {
     DEBUG,
@@ -20,26 +20,27 @@ typedef enum {
 #define CHECK_PRINT_FMT(...)
 #endif
 
-CHECK_PRINT_FMT(2, 3) void my_log(LogLevel log, const char* fmt, ...)
+CHECK_PRINT_FMT(2, 3)
+void my_log(LogLevel log, const char* fmt, ...)
 {
     FILE* fd = stdout;
     switch (log) {
-        case DEBUG:
-            fprintf(fd, "DEBUG: ");
-            break;
-        case INFO:
-            fprintf(fd, "INFO: ");
-            break;
-        case WARNING:
-            fprintf(fd, "WARNING: ");
-            break;
-        case ERROR:
-            fd = stderr;
-            fprintf(fd, "ERROR: ");
-            break;
-        default:
-            fprintf(fd, "UNKNOWN: ");
-            break;
+    case DEBUG:
+        fprintf(fd, "DEBUG: ");
+        break;
+    case INFO:
+        fprintf(fd, "INFO: ");
+        break;
+    case WARNING:
+        fprintf(fd, "WARNING: ");
+        break;
+    case ERROR:
+        fd = stderr;
+        fprintf(fd, "ERROR: ");
+        break;
+    default:
+        fprintf(fd, "UNKNOWN: ");
+        break;
     }
     va_list args;
     va_start(args, fmt);
@@ -119,8 +120,7 @@ static int quicksort_test()
         for (int i = 0; i < 10; ++i)
             printf("%d ", a[i]);
         printf("\n");
-    }
-    else
+    } else
         printf("Quicksort test 1 passed\n");
 
     int b[10] = {17, 2, 42, 7, 8, 4, 0, 7, 11, 9};
@@ -140,8 +140,7 @@ static int quicksort_test()
         for (int i = 0; i < 10; ++i)
             printf("%d ", b[i]);
         printf("\n");
-    }
-    else
+    } else
         printf("Quicksort test 2 passed\n");
 
     return 0;
@@ -152,14 +151,15 @@ static void vector_debug(vector* v)
     fprintf(stderr, "length: %d\n", v->length);
     fprintf(stderr, "capacity: %d\n", v->capacity);
     fprintf(stderr, "data: ");
-    int *data = v->data;
+    int* data = v->data;
     fprintf(stderr, "[ ");
     for (int i = 0; i < v->length; ++i)
         fprintf(stderr, "%d ", data[i]);
     fprintf(stderr, "]\n");
 }
 
-static void multiply_by_2(int* i) {
+static void multiply_by_2(int* i)
+{
     *i *= 2;
 }
 
@@ -167,7 +167,7 @@ static void vector_test()
 {
     vector v;
     vector_alloc(&v, sizeof(int));
-    vector_push_back(&v, (void *)&(int){0});
+    vector_push_back(&v, (void*)&(int){0});
 
     if (v.length == 1 && v.capacity == 2 && ((int*)v.data)[0] == 0) {
         printf("Vector push_back test 1 passed\n");
@@ -176,8 +176,8 @@ static void vector_test()
         vector_debug(&v);
     }
 
-    vector_push_back(&v, (void *)&(int){1});
-    vector_push_back(&v, (void *)&(int){2});
+    vector_push_back(&v, (void*)&(int){1});
+    vector_push_back(&v, (void*)&(int){2});
 
     if (v.length == 3 && v.capacity == 4 && ((int*)v.data)[2] == 2) {
         printf("Vector push_back test 2 passed\n");
@@ -185,13 +185,13 @@ static void vector_test()
         printf("Vector push_back test 2 FAILED\n");
         vector_debug(&v);
     }
-    vector_push_back(&v, (void *)&(int){3});
-    vector_push_back(&v, (void *)&(int){4});
-    vector_push_back(&v, (void *)&(int){5});
-    vector_push_back(&v, (void *)&(int){6});
-    vector_push_back(&v, (void *)&(int){7});
-    vector_push_back(&v, (void *)&(int){8});
-    vector_push_back(&v, (void *)&(int){9});
+    vector_push_back(&v, (void*)&(int){3});
+    vector_push_back(&v, (void*)&(int){4});
+    vector_push_back(&v, (void*)&(int){5});
+    vector_push_back(&v, (void*)&(int){6});
+    vector_push_back(&v, (void*)&(int){7});
+    vector_push_back(&v, (void*)&(int){8});
+    vector_push_back(&v, (void*)&(int){9});
 
     if (v.length == 10 && v.capacity == 16 && ((int*)v.data)[9] == 9) {
         printf("Vector push_back test 3 passed\n");
@@ -200,8 +200,8 @@ static void vector_test()
         vector_debug(&v);
     }
 
-    int *value = vector_get_value(&v, 9);
-    int *value_err = vector_get_value(&v, 10);
+    int* value = vector_get_value(&v, 9);
+    int* value_err = vector_get_value(&v, 10);
     if (*value == 9 && value_err == NULL) {
         printf("Vector get_value test passed\n");
     } else {
@@ -222,10 +222,10 @@ static void vector_test()
         printf("Vector pop_back test 2 FAILED\n");
     }
 
-    vector_for_each(&v, (void(*)(void*)) multiply_by_2);
+    vector_for_each(&v, (void (*)(void*))multiply_by_2);
     int for_each_failed = 0;
     for (int i = 0; i < v.length; ++i) {
-        if (*(int *)vector_get_value(&v, i) != i*2)
+        if (*(int*)vector_get_value(&v, i) != i * 2)
             for_each_failed = 1;
     }
     if (!for_each_failed) {
@@ -237,7 +237,7 @@ static void vector_test()
     vector_free(&v);
 }
 
-int main ()
+int main()
 {
     int a = 10;
     my_log(INFO, "Hello world %d\n", a);
