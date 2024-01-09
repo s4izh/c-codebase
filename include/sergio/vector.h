@@ -26,8 +26,8 @@
  */
 typedef struct vector {
     void* data;
-    int length;
-    int capacity;
+    size_t length;
+    size_t capacity;
     size_t data_size;
 } vector;
 
@@ -79,9 +79,10 @@ int vector_pop_back(vector* v);
  *
  * @param[in] v Pointer to the dynamic array.
  * @param[in] index Index of the element to get.
- * @return Pointer to the element at the specified index, or NULL if there was an error allocating memory.
+ * @return Pointer to the element at the specified index, or NULL if there was an error allocating
+ * memory.
  */
-void* vector_get_value(vector* v, int index);
+void* vector_get_value(vector* v, size_t index);
 
 /**
  * @brief Call a function for each element in a dynamic array.
@@ -91,6 +92,14 @@ void* vector_get_value(vector* v, int index);
  * @param[in] v Pointer to the dynamic array.
  * @param[in] f Function to be called for each element.
  */
-void vector_for_each(vector* v, void(*f)(void*));
+void vector_for_each(vector* v, void (*f)(void*));
+
+/* #define for_each(element, v) \ */
+/*     for (size_t i = 0, element = *(v->data); i < v->length; element = *((v->data)+(v->data_size *
+ * i++))) */
+
+#define for_each(element, v)            \
+    for (size_t i = 0; i < (v)->length; \
+         ++i, (element) = (void*)((char*)((v)->data) + ((v)->data_size * i)))
 
 #endif

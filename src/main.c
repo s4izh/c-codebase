@@ -148,8 +148,8 @@ static int quicksort_test()
 
 static void vector_debug(vector* v)
 {
-    fprintf(stderr, "length: %d\n", v->length);
-    fprintf(stderr, "capacity: %d\n", v->capacity);
+    fprintf(stderr, "length: %zu\n", v->length);
+    fprintf(stderr, "capacity: %zu\n", v->capacity);
     fprintf(stderr, "data: ");
     int* data = v->data;
     fprintf(stderr, "[ ");
@@ -232,6 +232,12 @@ static void vector_test()
         printf("Vector for_each passed\n");
     } else {
         printf("Vector for_each FAILED\n");
+    }
+
+    int* e;
+
+    for_each (e, &v) {
+        printf("%d ", *e);
     }
 
     vector_free(&v);
