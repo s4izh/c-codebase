@@ -26,7 +26,7 @@ int vector_push_back(vector* v, void* data)
 {
     if (v->length == v->capacity) {
         v->capacity *= 2;
-        void *new = realloc(v->data, v->capacity * v->data_size);
+        void* new = realloc(v->data, v->capacity * v->data_size);
         if (new == NULL)
             return -1;
         v->data = new;
@@ -43,7 +43,7 @@ int vector_pop_back(vector* v)
     }
     if (v->length < v->capacity / 2) {
         v->capacity = v->capacity / 2;
-        void *new = realloc(v->data, v->capacity * v->data_size);
+        void* new = realloc(v->data, v->capacity * v->data_size);
         if (new == NULL)
             return -1;
         v->data = new;
@@ -51,14 +51,14 @@ int vector_pop_back(vector* v)
     return 0;
 }
 
-void* vector_get_value(vector* v, int index)
+void* vector_get_value(vector* v, size_t index)
 {
     if (index >= v->length)
         return NULL;
     return v->data + index * v->data_size;
 }
 
-void vector_for_each(vector* v, void(*f)(void*))
+void vector_for_each(vector* v, void (*f)(void*))
 {
     void* curr_data = v->data;
     for (int i = 0; i < v->length; ++i) {
@@ -66,8 +66,3 @@ void vector_for_each(vector* v, void(*f)(void*))
         curr_data += v->data_size;
     }
 }
-
-#define for_each(element, v) \
-    for (size_t i = 0, element = *(v->data); i < v->length; element = *((v->data)+(v->data_size * i++)))
-
-
